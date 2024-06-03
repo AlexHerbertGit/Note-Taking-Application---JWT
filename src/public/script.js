@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('noteForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent the default form submission
 
+    // Confirm save action
+    const confirmSave = confirm('Are you sure you want to save this note?');
+    if (!confirmSave) {
+        return; // If the user cancels, do not proceed with saving
+    }
+
     // Get form values
     const noteId = document.getElementById('noteId').value; // Get the hidden noteId field value
     const title = document.getElementById('noteTitle').value;
@@ -132,6 +138,12 @@ fetchNotes();
 //Delete note functionality
 document.getElementById('deleteButton').addEventListener('click', async function() {
     const noteId = document.getElementById('noteId').value; // Get the hidden noteId field value
+
+    // Confirm delete action
+    const confirmDelete = confirm('Are you sure you want to delete this note?');
+    if (!confirmDelete) {
+        return; // If the user cancels, do not proceed with deletion
+    }
 
     if (noteId) {
         try {
