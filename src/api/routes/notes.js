@@ -14,6 +14,23 @@ router.get('/', async (req, res) => {
     }
 });
 
+//GET ROUTE   /api/notes/:id
+router.get('/:id', async (req, res) => {
+    try {
+        const note = await Note.findById(req.params.id);
+        if (!note) {
+            return res.status(404).json({ msg: 'Note not found' });
+        }
+        res.json(note);
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Note not found' });
+        }
+        res.status(500).send('Server Error');
+    }
+});
+
 //POST ROUTE  /api/notes
 router.post(
     '/',
@@ -29,7 +46,7 @@ router.post(
         }
 
         const { title, date, content } = req.body;
-        
+
         try {
             const newNote = new Note({
                 title,
@@ -50,7 +67,7 @@ router.post(
 router.put('/:id', async (req, res) => {
     const { title, date, content } = req.body;
 
-    //Build note object
+    // Build note object
     const noteFields = {};
     if (title) noteFields.title = title;
     if (date) noteFields.date = date;
@@ -79,11 +96,11 @@ router.delete('/:id', async (req, res) => {
     try {
         let note = await Note.findById(req.params.id);
 
-        if (!note) return res.status(404).json({ msg: "Note not found" });
+        if (!note) return res.status(404).json({ msg: 'Note not found' });
 
-        await Note.findByIdAndRemove(req.params.id);
+        await Note.findByIdAndDelete(req.params.id);
 
-        res.json({ msg: 'Note Removed' });
+        res.json({ msg: 'Note removed' });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

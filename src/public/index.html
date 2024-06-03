@@ -24,26 +24,25 @@
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1">
                         <span>Notes</span>
                     </h6>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Create New Note
-                            </a>
-                        </li>
-                        <!-- Add dynamic list items here -->
+                    <a class="nav-link" href="#">
+                        Create New Note
+                    </a>
+                    <ul class="nav flex-column" id="notesList">
+                        <!-- Note titles will be rendered here dynamically -->
                     </ul>
 
                     <!-- Login button at the bottom -->
                     <div class="sidebar-footer mt-auto px-3">
                         <button class="btn btn-primary w-100 d-flex align-items-center">
-                            <span class="mr-2"> 
-                                <img src="./login-icon.png" class="login-icon"> 
+                            <span class="mr-2">
+                                <img src="./login-icon.png" class="login-icon">
                             </span>
                             Login
                         </button>
                     </div>
                 </div>
             </nav>
+
 
             <!--Main page user interface/note taking section-->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -53,14 +52,15 @@
 
                 <div class="d-flex justify-content-center">
                     <div class="note-editor col-12 col-md-10 col-lg-8">
-                        <form>
+                        <form id="noteForm">
+                            <input type="hidden" id="noteId">
                             <div class="form-group">
                                 <label for="noteTitle">Note Title</label>
-                                <input type="text" class="form-control" id="noteTitle" placeholder="Enter title">
+                                <input type="text" class="form-control" id="noteTitle" placeholder="Enter title" required>
                             </div>
                             <div class="form-group">
                                 <label for="noteDate">Date</label>
-                                <input type="text" class="form-control" id="noteDate" placeholder="dd/mm/yyyy">
+                                <input type="text" class="form-control" id="noteDate" placeholder="dd/mm/yyyy" required>
                             </div>
                             <div class="form-group">
                                 <label for="noteContent">Note</label>
@@ -82,7 +82,7 @@
                                 <div class="form-control" id="noteContent" contenteditable="true" placeholder="Write your note here..."></div>
                             </div>
                             <button type="submit" class="btn btn-success">Save Note</button>
-                            <button type="button" class="btn btn-danger">Delete Note</button>
+                            <button type="button" id="deleteButton" class="btn btn-danger">Delete Note</button>
                         </form>
                     </div>
                 </div>

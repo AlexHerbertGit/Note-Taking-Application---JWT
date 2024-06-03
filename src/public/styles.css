@@ -40,6 +40,7 @@ body {
     font-weight: 500;
     color: #ffffff;
     border: solid;
+    margin-top: 5%;
     margin-left: 10%;
     margin-right: 10%;
     text-align: center;
@@ -49,7 +50,27 @@ body {
 
 .sidebar .nav-link:hover {
     color: #030303;
-    background-color: #babec2;
+    background-color: #b8babd;
+}
+
+
+#notesList .nav-item {
+    border: none;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 0;
+}
+
+#notesList .nav-item .nav-link {
+    color: #cccccc;
+    padding: 10px 15px;
+}
+
+#notesList .nav-item .nav-link:hover {
+    color: #000000;
+    background-color: #57f19d;
 }
 
 .note-editor {
