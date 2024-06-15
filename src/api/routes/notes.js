@@ -1,12 +1,14 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
-const router = express.Router();
 const Note = require('../models/note');
+const auth = require('../middleware/auth')
+
+const router = express.Router();
 
 // GET ROUTE  /api/notes
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
-        const notes = await Note.find();
+        const notes = await Note.find({ user: req.user.id });
         res.json(notes);
     } catch (err) {
         console.error(err.message);
@@ -15,12 +17,17 @@ router.get('/', async (req, res) => {
 });
 
 //GET ROUTE   /api/notes/:id
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
         if (!note) {
             return res.status(404).json({ msg: 'Note not found' });
         }
+
+        if (note.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Not authorized'})
+        }
+        
         res.json(note);
     } catch (err) {
         console.error(err.message);
@@ -34,11 +41,11 @@ router.get('/:id', async (req, res) => {
 //POST ROUTE  /api/notes
 router.post(
     '/',
-    [
+    [auth, [
         check('title', 'Title is required').not().isEmpty(),
         check('date', 'Date is required').not().isEmpty(),
         check('content', 'Content is required').not().isEmpty(),
-    ],
+    ]],
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -52,6 +59,7 @@ router.post(
                 title,
                 date,
                 content,
+                user: req.user.id
             });
 
             const note = await newNote.save();
@@ -64,7 +72,7 @@ router.post(
 );
 
 //PUT ROUTE   /api/notes/:id
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     const { title, date, content } = req.body;
 
     // Build note object
@@ -77,6 +85,10 @@ router.put('/:id', async (req, res) => {
         let note = await Note.findById(req.params.id);
 
         if (!note) return res.status(404).json({ msg: 'Note not found' });
+
+        if (note.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Not authorized' });
+        }
 
         note = await Note.findByIdAndUpdate(
             req.params.id,
@@ -92,11 +104,15 @@ router.put('/:id', async (req, res) => {
 });
 
 //DELETE ROUTE   /api/notes/:id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         let note = await Note.findById(req.params.id);
 
         if (!note) return res.status(404).json({ msg: 'Note not found' });
+
+        if (note.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Not authorized' });
+        }
 
         await Note.findByIdAndDelete(req.params.id);
 
