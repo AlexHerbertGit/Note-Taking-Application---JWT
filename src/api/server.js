@@ -14,6 +14,7 @@ app.use(express.json({ extended: false }));
 
 // Define routes
 app.use('/api/notes', require('./routes/notes'));
+app.use('/api/auth', require('./routes/auth'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
