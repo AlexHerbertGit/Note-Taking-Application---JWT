@@ -54,6 +54,41 @@ body {
     background-color: #b8babd;
 }
 
+#loginFormContainer {
+    padding: 15px; 
+    background-color: #f8f9fa; 
+    border-radius: 5px; 
+    margin: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+#loginFormContainer .form-group {
+    margin-bottom: 15px; 
+}
+
+#loginFormContainer .btn-primary {
+    width: 100%; 
+}
+
+#signUpFormContainer {
+    padding: 15px; 
+    background-color: #f8f9fa; 
+    border-radius: 5px; 
+    margin: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+#signUpFormContainer form {
+    margin-bottom: 15px; 
+}
+
+#signUpFormContainer .form-group {
+    margin-bottom: 1rem;
+}
+
+#signUpFormContainer .btn {
+    width: 100%;
+}
 
 #notesList .nav-item {
     border: none;

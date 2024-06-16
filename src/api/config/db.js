@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb+srv://alexherberttech:qEMVInzTafvQhQ4o@notemanagmentdb.xkln5np.mongodb.net/?retryWrites=true&w=majority&appName=noteManagmentDB", {
+        await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -11,6 +11,6 @@ const connectDB = async () => {
         console.error(err.message);
         process.exit(1);
     }
- };
+};
 
- module.exports = connectDB;
+module.exports = connectDB;
